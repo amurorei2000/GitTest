@@ -14,8 +14,22 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dir = target.position - transform.position;
-        dir.Normalize();
+        GameObject player = GameObject.Find("Player");
+        // 만약 플레이어가 있다면
+        //if (player != null)
+        if(player)
+        {
+            // 타겟 방향으로 이동하도록 한다.
+            target = player.transform;
+            dir = target.position - transform.position;
+            dir.Normalize();
+        }
+        // 그렇지 않으면
+        else
+        {
+            // 그냥 아래로 이동시키자
+            dir = Vector3.down;
+        }
     }
 
     // Update is called once per frame
@@ -26,5 +40,15 @@ public class Enemy : MonoBehaviour
         // -> 타겟 - 미
         // 2. 이동하고 싶다.
         transform.position += dir * speed * Time.deltaTime;
+    }
+
+    // 다른물체와 부딪히면 갸도 죽고, 나도 죽고자
+    // Enter, Stay, Exit
+    private void OnCollisionEnter(Collision collision)
+    {
+        // 갸도 죽고
+        Destroy(collision.gameObject);
+        // 나도 죽고
+        Destroy(gameObject);
     }
 }
