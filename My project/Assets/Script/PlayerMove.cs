@@ -6,6 +6,7 @@ using UnityEngine;
 // 필요속성 : 이동속도
 public class PlayerMove : MonoBehaviour
 {
+    public int num = 5;
     // 필요속성 : 이동속도
     float speed = 5;
     // Start is called before the first frame update

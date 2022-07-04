@@ -16,8 +16,16 @@ public class Enemy : MonoBehaviour
     {
         GameObject player = GameObject.Find("Player");
         // 만약 플레이어가 있다면
+        // 70% 의 확률로 방향을 설정하고 싶다.
+        // 1. 확률을 구해야한다.
+        int rand = Random.Range(0, 10);
+        // 2. 만약 확률이 70% 안에 들어오면
+        //  -> 아래로 방향을 설정
+        // 3. 그렇지 않으면
+        //  -> 타겟쪽으로 방향으로 설정
         //if (player != null)
-        if(player)
+        // 플레이어가 있고 확률이 30 % 안에 들어오면
+        if(player && rand >= 7)
         {
             // 타겟 방향으로 이동하도록 한다.
             target = player.transform;
@@ -46,8 +54,18 @@ public class Enemy : MonoBehaviour
     // Enter, Stay, Exit
     private void OnCollisionEnter(Collision collision)
     {
-        // 갸도 죽고
-        Destroy(collision.gameObject);
+        // 만약 부딪힌 녀석이 총알이라면
+        if (collision.gameObject.name.Contains("Bullet"))
+        {
+            // -> 탄창에 넣어주고
+            collision.gameObject.SetActive(false);
+        }
+        // 그렇지 않으면
+        else
+        {
+            // 갸도 죽고
+            Destroy(collision.gameObject);
+        }
         // 나도 죽고
         Destroy(gameObject);
     }
