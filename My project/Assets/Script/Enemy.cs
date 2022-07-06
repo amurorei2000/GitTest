@@ -69,8 +69,16 @@ public class Enemy : MonoBehaviour
         // 그렇지 않으면
         else
         {
-            // 갸도 죽고
-            Destroy(collision.gameObject);
+            // 플레이어의 hp 를 감소시키고 싶다.
+            // 1. Player 가 있어야한다.
+            // -> 부딪힌 녀석이 플레이어라면
+            //if (collision.gameObject.name.Contains("Player"))
+            //if (collision.gameObject.tag == "Player")
+            //if (collision.gameObject.layer == 8)
+            //if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+            // 야 너 PlayerHealth 있으면 줘봐
+            // 2. PlayerHealth 가 있어야한다.
+            PlayerHealth.Instance.HP--;
         }
         // 나도 죽고
         Destroy(gameObject);
