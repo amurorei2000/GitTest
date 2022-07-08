@@ -11,9 +11,14 @@ public class Enemy : MonoBehaviour
     // 필요속성 : 타겟
     public Transform target;
     Vector3 dir;
+
+    GameObject explosionFactory;
     // Start is called before the first frame update
     void Start()
     {
+        //explosionFactory = (GameObject)Resources.Load("Prefabs/Explosion");
+        explosionFactory = Resources.Load("Prefabs/Explosion") as GameObject;
+
         GameObject player = GameObject.Find("Player");
         // 만약 플레이어가 있다면
         // 70% 의 확률로 방향을 설정하고 싶다.
@@ -52,8 +57,13 @@ public class Enemy : MonoBehaviour
 
     // 다른물체와 부딪히면 갸도 죽고, 나도 죽고자
     // Enter, Stay, Exit
+    
+
     private void OnCollisionEnter(Collision collision)
     {
+        GameObject explosion = Instantiate(explosionFactory);
+        explosion.transform.position = transform.position;
+
         // 만약 부딪힌 녀석이 총알이라면
         if (collision.gameObject.name.Contains("Bullet"))
         {
